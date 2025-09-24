@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services - Social Media Services</title>
+  
+  <link rel="icon" href="https://i.pinimg.com/736x/f7/a6/0b/f7a60be7486f4c5b633d162cfa120424.jpg" type="image/png" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9fafc;
+      color: #333;
+    }
+    header {
+      margin-bottom: 30px;
+    }
+    header a {
+      text-decoration: none;
+      background: #0078d7;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s;
+      display: inline-block;
+    }
+    header a:hover {
+      background: #005fa3;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #222;
+    }
+    table {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto 50px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    thead tr {
+      background: #0078d7;
+      color: white;
+      font-weight: bold;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+    tr.category-row td {
+      background: #e1eaff;
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      border-bottom: 2px solid #0078d7;
+    }
+    tr:hover:not(.category-row) {
+      background-color: #f1faff;
+    }
+    .price {
+      color: #008000;
+      font-weight: 700;
+    }
+
+    /* Responsive for smaller devices */
+    @media (max-width: 700px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tr.category-row td {
+        text-align: left;
+        font-size: 18px;
+        padding: 15px 10px;
+      }
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background: white;
+      }
+      td {
+        padding: 10px;
+        text-align: right;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-weight: bold;
+        color: #555;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      td:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    /* Floating Support Button */
+    #supportBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 1000;
+    }
+    #supportBtn:hover {
+      background: #005fa3;
+    }
+
+    /* Support Chat Popup */
+    #supportChat {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 320px;
+      max-width: 90vw;
+      background: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+    }
+    #supportChat header {
+      background: #0078d7;
+      color: white;
+      padding: 12px 16px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #supportChat header button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    #supportChat .chat-body {
+      padding: 16px;
+      height: 220px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: #444;
+    }
+    #supportChat .chat-footer {
+      border-top: 1px solid #ddd;
+      padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+    }
+    #supportChat .chat-footer input {
+      flex-grow: 1;
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    #supportChat .chat-footer button {
+      background: #0078d7;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    #supportChat .chat-footer button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html">&larr; Return to Home</a>
+  </header>
+
+  <h1>Our Social Media Services</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Service Name</th>
+        <th>Price</th>
+        <th>Min Quantity</th>
+        <th>Max Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- TikTok Video Views -->
+      <tr class="category-row"><td colspan="5">TikTok Video Views</td></tr>
+      <tr><td data-label="ID">1</td><td data-label="Service Name">TikTok Video Views [ Max Unlimited ] | HQ | ⚙️ 30 Days Auto ♻️ | Instant Start | Day 100M 🚀🚀</td><td data-label="Price" class="price">$0.0325</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">2,147,483,647</td></tr>
+      <tr><td data-label="ID">2</td><td data-label="Service Name">TikTok Video Views [ Max Unlimited ] | HQ | ⚙️ 365 Days Auto ♻️ | Instant Start | Day 100M 🚀🚀</td><td data-label="Price" class="price">$0.04</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">2,147,483,647</td></tr>
+      <tr><td data-label="ID">3</td><td data-label="Service Name">TikTok Video Views [ Max Unlimited ] | HQ | ⚙️ Lifetime Auto ♻️ | Instant Start | Day 100M 🚀🚀</td><td data-label="Price" class="price">$0.06</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">2,147,483,647</td></tr>
+
+      <!-- TikTok Likes [High Speed] -->
+      <tr class="category-row"><td colspan="5">TikTok Likes [High Speed]</td></tr>
+      <tr><td data-label="ID">4</td><td data-label="Service Name">TikTok Likes [ Max 1M ] | LQ Profiles | Cancel Enable | 30 Days ♻️ | Instant Start | Day 100K ⚡</td><td data-label="Price" class="price">$0.06</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">1,000,000</td></tr>
+      <tr><td data-label="ID">5</td><td data-label="Service Name">TikTok Likes [ Max 1M ] | LQ Profiles | Cancel Enable | 60 Days ♻️ | Instant Start | Day 100K ⚡</td><td data-label="Price" class="price">$0.06</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">1,000,000</td></tr>
+      <tr><td data-label="ID">6</td><td data-label="Service Name">TikTok Likes [ Max 1M ] | LQ Profiles | Cancel Enable | 90 Days ♻️ | Instant Start | Day 100K ⚡</td><td data-label="Price" class="price">$0.06</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">1,000,000</td></tr>
+      <tr><td data-label="ID">7</td><td data-label="Service Name">TikTok Likes [ Max 1M ] | LQ Profiles | Cancel Enable | 365 Days ♻️ | Instant Start | Day 100K ⚡</td><td data-label="Price" class="price">$0.07</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">1,000,000</td></tr>
+
+      <!-- TikTok Likes [USA] -->
+      <tr class="category-row"><td colspan="5">TikTok Likes [ USA ] ᴺᴱᵂ</td></tr>
+      <tr><td data-label="ID">8</td><td data-label="Service Name">TikTok Likes [ 🇺🇸 USA ] [ Max 100K ] | 100% USA Accounts With Posts | Cancel Enable | Low Drop | No Refill ⚠️ | Instant Start | Day 100K 🚀</td><td data-label="Price" class="price">$0.12</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">100,000</td></tr>
+      <tr><td data-label="ID">9</td><td data-label="Service Name">TikTok Likes [ 🇺🇸 USA ] [ Max 100K ] | 100% USA Accounts With Posts | Cancel Enable | Low Drop | 30 Days ♻️ | Instant Start | Day 100K 🚀</td><td data-label="Price" class="price">$0.12</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">100,000</td></tr>
+      <tr><td data-label="ID">10</td><td data-label="Service Name">TikTok Likes [ 🇺🇸 USA ] [ Max 100K ] | 100% USA Accounts With Posts | Cancel Enable | Low Drop | 60 Days ♻️ | Instant Start | Day 100K 🚀</td><td data-label="Price" class="price">$0.12</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">100,000</td></tr>
+      <tr><td data-label="ID">11</td><td data-label="Service Name">TikTok Likes [ 🇺🇸 USA ] [ Max 100K ] | 100% USA Accounts With Posts | Cancel Enable | Low Drop | 90 Days ♻️ | Instant Start | Day 100K 🚀</td><td data-label="Price" class="price">$0.12</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">100,000</td></tr>
+
+      <!-- Facebook Video Views -->
+      <tr class="category-row"><td colspan="5">Facebook Video Views</td></tr>
+      <tr><td data-label="ID">12</td><td data-label="Service Name">Facebook Video Views [ Max 100M ] | HQ | Instant Start | Day 10M 🚀🚀</td><td data-label="Price" class="price">$0.022</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">100,000,000</td></tr>
+      <tr><td data-label="ID">13</td><td data-label="Service Name">Facebook Video Views [ Max 10M ] | HQ | Instant Start | Day 5M 🚀</td><td data-label="Price" class="price">$0.035</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">10,000,000</td></tr>
+      <tr><td data-label="ID">14</td><td data-label="Service Name">Facebook Video Views [ Max 5M ] | HQ | Instant Start | Day 2M 🚀</td><td data-label="Price" class="price">$0.05</td><td data-label="Min Quantity">1,000</td><td data-label="Max Quantity">5,000,000</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Floating Support Assistant Button -->
+  <button id="supportBtn" title="Support Assistant">💬</button>
+
+  <!-- Support Chat Popup -->
+  <div id="supportChat">
+    <header>
+      Support Assistant
+      <button id="closeSupportBtn" title="Close chat">&times;</button>
+    </header>
+    <div class="chat-body" id="chatBody">
+      <p>Hi! How can I assist you today?</p>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chatInput" placeholder="Type your message..." />
+      <button id="sendChatBtn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const supportBtn = document.getElementById('supportBtn');
+    const supportChat = document.getElementById('supportChat');
+    const closeSupportBtn = document.getElementById('closeSupportBtn');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const sendChatBtn = document.getElementById('sendChatBtn');
+
+    supportBtn.addEventListener('click', () => {
+      supportChat.style.display = 'flex';
+      chatInput.focus();
+    });
+
+    closeSupportBtn.addEventListener('click', () => {
+      supportChat.style.display = 'none';
+    });
+
+    sendChatBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
+      const msg = chatInput.value.trim();
+      if (!msg) return;
+
+      const userMsg = document.createElement('p');
+      userMsg.style.fontWeight = 'bold';
+      userMsg.textContent = `You: ${msg}`;
+      chatBody.appendChild(userMsg);
+
+      const replyMsg = document.createElement('p');
+      replyMsg.textContent = `Support: Thanks for your message! We will get back to you shortly.`;
+      chatBody.appendChild(replyMsg);
+
+      chatInput.value = '';
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boost Panel - Orders</title>
+  <link rel="icon" href="https://i.pinimg.com/736x/f7/a6/0b/f7a60be7486f4c5b633d162cfa120424.jpg" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">ALSIN<span class="highlight">Boost</span></div>
+      <nav>
+        <a href="index.html" class="active">New Order</a>
+        <a href="add-funds.html">Add Funds</a>
+        <a href="orders.html"><i class="ri-list-check"></i> Orders</a>
+        <a href="service.html"><i class="ri-list-check"></i> Service</a>
+      </nav>
+      <footer>© 2025 ALSIN BOOST</footer>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="user-info">
+          <div class="avatar">RAW</div>
+          <div>
+            <h2>REAN AI WEB</h2>
+            <small>Place your order here</small>
+          </div>
+        </div>
+        <div class="balance">
+          Balance: <span>$0.00</span>
+        </div>
+      </header>
+      <section class="card">
+        <h3>Orders</h3>
+
+        <input
+          type="search"
+          class="search-input"
+          id="searchOrders"
+          placeholder="Search orders..."
+        />
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Link</th>
+              <th>Charge</th>
+              <th>Quantity</th>
+              <th>Service</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Orders will be inserted here -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const ordersTableBody = document.getElementById("ordersTableBody");
+    const searchInput = document.getElementById("searchOrders");
+
+    // Load orders from localStorage
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      ordersTableBody.innerHTML = "";
+      if (orders.length === 0) {
+        ordersTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#94a3b8;">No orders found.</td></tr>`;
+        return;
+      }
+      orders.forEach((order, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td data-label="ID">#${idx + 1}</td>
+          <td data-label="Date">${order.date}</td>
+          <td data-label="Link"><a href="${order.link}" target="_blank" rel="noopener noreferrer">${order.link}</a></td>
+          <td data-label="Charge">$${order.charge.toFixed(2)}</td>
+          <td data-label="Quantity">${order.quantity}</td>
+          <td data-label="Service">${order.service}</td>
+          <td data-label="Status">${order.status}</td>
+        `;
+        ordersTableBody.appendChild(tr);
+      });
+    }
+
+    // Search filter
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      [...ordersTableBody.rows].forEach((row) => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    });
+
+    loadOrders();
+  </script>
+</body>
+</html>

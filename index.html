@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boost Panel - New Order</title>
+  <link rel="icon" href="https://i.pinimg.com/736x/f7/a6/0b/f7a60be7486f4c5b633d162cfa120424.jpg" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">ALSIN<span class="highlight">Boost</span></div>
+      <nav>
+        <a href="index.html" class="active">New Order</a>
+        <a href="add-funds.html">Add Funds</a>
+        <a href="orders.html"><i class="ri-list-check"></i> Orders</a>
+        <a href="service.html"><i class="ri-list-check"></i> Service</a>
+      </nav>
+      <footer>© 2025 ALSIN BOOST</footer>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="user-info">
+          <div class="avatar">RAW</div>
+          <div>
+            <h2>REAN AI WEB</h2>
+            <small>Place your order here</small>
+          </div>
+        </div>
+        <div class="balance">
+          Balance: <span>$0.00</span>
+        </div>
+      </header>
+
+      <section class="card">
+        <h3>New Order</h3>
+
+        <form id="orderForm" class="form">
+          <div class="form-group">
+            <select name="category" required>
+              <option value="" disabled selected>Select Category</option>
+              <option value="Facebook">Facebook</option>
+              <option value="TikTok">TikTok</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Instagram">Instagram</option>
+            </select>
+            <label>Category</label>
+          </div>
+
+          <div class="form-group">
+            <select name="service" required>
+              <option value="" disabled selected>Select Service</option>
+              <option value="Views">Views</option>
+              <option value="Followers">Followers</option>
+              <option value="Likes">Likes</option>
+              <option value="Comments">Comments</option>
+            </select>
+            <label>Service</label>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="url"
+              name="link"
+              placeholder=" "
+              required
+              pattern="https?://.+"
+              title="Enter a valid URL"
+            />
+            <label>Link</label>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="number"
+              name="quantity"
+              placeholder=" "
+              min="1"
+              required
+            />
+            <label>Quantity</label>
+          </div>
+
+          <button type="submit" class="btn">Buy Now</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Balance functions
+    function getBalance() {
+      return parseFloat(localStorage.getItem("balance")) || 50.00; // default balance $50
+    }
+
+    function updateBalance(newBalance) {
+      localStorage.setItem("balance", newBalance.toFixed(2));
+      const balanceSpan = document.querySelector('.balance span');
+      if (balanceSpan) balanceSpan.textContent = `$${newBalance.toFixed(2)}`;
+    }
+
+    // Calculate charge (example: $1 per unit)
+    function calculateCharge(quantity) {
+      return Number(quantity) * 1.0; // adjust pricing here
+    }
+
+    // Initialize balance display on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      updateBalance(getBalance());
+    });
+
+    // Handle order form submission
+    const orderForm = document.getElementById("orderForm");
+    orderForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const category = this.category.value;
+      const service = this.service.value;
+      const link = this.link.value;
+      const quantity = this.quantity.value;
+
+      const charge = calculateCharge(quantity);
+      let currentBalance = getBalance();
+
+      // Check balance
+      if (charge > currentBalance) {
+        alert("⚠️ Insufficient balance! Please add funds.\nប្រាក់មិនគ្រប់គ្រាន់! សូមបន្ថែមប្រាក់។");
+        return; // stop submission
+      }
+
+      // Deduct balance
+      currentBalance -= charge;
+      updateBalance(currentBalance);
+
+      // Prepare order data
+      const today = new Date().toISOString().slice(0, 10);
+      const orderId = Date.now();
+
+      // Compose Telegram message
+      const message = `🆕 New Order
+Category: ${category}
+Service: ${service}
+Link: ${link}
+Quantity: ${quantity}
+Charge: $${charge.toFixed(2)}
+Remaining Balance: $${currentBalance.toFixed(2)}`;
+
+      // Send to Telegram
+      sendTelegramMessage(message);
+
+      // Save order to localStorage
+      saveOrder({
+        id: orderId,
+        date: today,
+        link,
+        charge,
+        quantity,
+        service: `${category} ${service}`,
+        status: "Pending",
+      });
+
+      alert("✅ Order placed successfully!");
+      this.reset();
+    });
+
+    // Paste your telegram.js functions here or include telegram.js script
+    function sendTelegramMessage(message) {
+      const botToken = "7530662027:AAGay6VXwq6VQJHePq1ytMl2aYjWFNdXN4w"; // Replace with your bot token
+      const chatId = "8078410911"; // Replace with your chat ID
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: message }),
+      })
+        .then((response) => {
+          if (response.ok) alert("✅ Order placed successfully!");
+          else alert("Order placed successfully");
+        })
+        .catch(() => alert("❌ Failed to send Order!"));
+    }
+
+    function saveOrder(order) {
+      let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      orders.unshift(order);
+      localStorage.setItem("orders", JSON.stringify(orders));
+    }
+  </script>
+</body>
+</html>
